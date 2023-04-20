@@ -1,0 +1,25 @@
+{
+  "name": "serverless-notification-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennismachu/serverless-notification-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dennismachu/serverless-notification-service/issues"
+  },
+  "homepage": "https://github.com/dennismachu/serverless-notification-service#readme",
+  "devDependencies": {
+    "aws-sdk": "^2.1361.0",
+    "serverless": "^3.30.1",
+    "serverless-offline": "^12.0.4"
+  }
+}
