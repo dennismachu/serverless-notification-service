@@ -26,6 +26,11 @@ provider:
   stage: dev
   region: eu-west-1
   iamRoleStatements:
+  - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource: "arn:aws:s3:::notification-micro-service-logs/*"
+
     - Effect: Allow
       Action:
         - sns:Publish

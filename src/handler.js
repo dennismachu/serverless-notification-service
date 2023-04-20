@@ -1,7 +1,9 @@
 // Import AWS SDK and create instances of SNS and SQS
 const AWS = require('aws-sdk');
 const sns = new AWS.SNS();
+const ses = new AWS.SES({ apiVersion: '2010-12-01' });
 const sqs = new AWS.SQS();
+const s3 = new AWS.S3();
 
 // Function to validate the input
 const validateInput = (body) => {
@@ -16,11 +18,24 @@ const validateInput = (body) => {
   );
 };
 
+const uploadToS3 = async (bucket, key, data) => {
+  const params = {
+    Bucket: bucket,
+    Key: key,
+    Body: data,
+  };
+
+  return s3.putObject(params).promise();
+};
+
 // Function to send the notification using SNS
 const sendNotification = async (event) => {
   try {
     const body = JSON.parse(event.body);
-    console.log('Event data:', event);
+    // Log event.body to the S3 bucket
+    const timestamp = new Date().toISOString();
+    const logKey = `logs/${timestamp}-event-body.log`;
+    await uploadToS3('notification-micro-service-logs', logKey, JSON.stringify(body, null, 2))
 
     // Validate the input
     if (!validateInput(body)) {
