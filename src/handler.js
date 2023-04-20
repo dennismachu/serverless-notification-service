@@ -54,11 +54,41 @@ const sendNotification = async (event) => {
 // Function to send SMS
 const sendSms = async (phoneNumber, message, senderId) => {
   // Implementation of sending SMS using AWS SNS or other services
+  const params = {
+    PhoneNumber: phoneNumber,
+    Message: message,
+    MessageAttributes: {
+      'AWS.SNS.SMS.SenderID': {
+        DataType: 'String',
+        StringValue: senderId,
+      },
+    },
+  };
+
+  return sns.publish(params).promise();
 };
 
 // Function to send Email
 const sendEmail = async (emailAddress, message, senderEmail) => {
   // Implementation of sending Email using AWS SES or other services
+  const params = {
+    Source: senderEmail,
+    Destination: {
+      ToAddresses: [emailAddress],
+    },
+    Message: {
+      Subject: {
+        Data: 'Email notification from Notification Microservice',
+      },
+      Body: {
+        Text: {
+          Data: message,
+        },
+      },
+    },
+  };
+
+  return ses.sendEmail(params).promise();
 };
 
 // Function to process the notifications and send SMS or emails
