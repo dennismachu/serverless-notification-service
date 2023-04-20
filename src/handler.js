@@ -18,9 +18,9 @@ const validateInput = (body) => {
 
 // Function to send the notification using SNS
 const sendNotification = async (event) => {
-  console.log('Event data:', event);
   try {
     const body = JSON.parse(event.body);
+    console.log('Event data:', event);
 
     // Validate the input
     if (!validateInput(body)) {
